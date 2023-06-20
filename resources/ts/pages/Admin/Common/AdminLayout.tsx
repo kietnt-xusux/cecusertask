@@ -5,8 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@/helper/type";
 import {ToastContainer} from "react-toastify";
 import {Dialog, Transition} from "@headlessui/react";
-import {commonConstants} from "@/constants";
-import systemSlice from '@/store/modules/systemSlice';
+import { systemSlice } from '@/store/modules/systemSlice';
 
 interface LayoutProps {
     children: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined | React.ReactNode;

@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useRef, useState} from "react";
 import AdminLayout from "@/pages/Admin/Common/AdminLayout";
 import { useDispatch, useSelector } from "react-redux";
-import systemSlice from '@/store/modules/systemSlice';
+import { systemSlice } from '@/store';
 
 const Dashboard = () => {
     const dispatch = useDispatch();

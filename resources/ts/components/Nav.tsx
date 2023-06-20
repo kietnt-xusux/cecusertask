@@ -30,7 +30,7 @@ export const Nav = () => {
 
     return (
         <nav className={`flex-grow md:block md:overflow-y-auto hidden bg-blue-400 h-screen px-1`}>
-            <Link to="/" className={ menu === 'dashboard' ? activeMenu : normalMenu }>
+            <Link to={`/${adminRoute}`} className={ menu === 'dashboard' ? activeMenu : normalMenu }>
                 <HomeIcon className={iconClass} />
                 <span className={textClass}>ダッシュボード</span>
             </Link>

@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authSlice from './modules/authSlice';
 import loadingSlice from './modules/loadingSlice';
-import systemSlice from './modules/systemSlice';
+import { systemSlice } from './modules/systemSlice';
 import storage from 'redux-persist/lib/storage'
 import {combineReducers} from "redux";
 import { persistReducer } from 'redux-persist'
@@ -34,3 +34,5 @@ export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 
 export const rootReducer = reducers;
+
+export * from './modules/systemSlice'

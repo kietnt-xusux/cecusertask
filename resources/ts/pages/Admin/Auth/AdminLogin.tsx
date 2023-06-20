@@ -26,7 +26,7 @@ const AdminLogin = () => {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-
+        setLoading(true);
         authService.login({ email, password }).then(result => {
             if (result.statusCode == 200) {
                 dispatch(authSlice.actions.loginSuccess(result.data))
@@ -36,7 +36,7 @@ const AdminLogin = () => {
             } else if (result.statusCode == 401) {
                 swal.messageErr('メールアドレス、またはパスワードに誤りがあります', 1000)
             }
-        });
+        }).catch(() => {}).then(() => setLoading(false));
     };
 
     useEffect(() => {

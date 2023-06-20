@@ -1,29 +1,26 @@
 import React, {Dispatch, SetStateAction, useState} from "react";
-import {PlusIcon, SearchIcon, XIcon} from "@/components";
+import {SearchIcon, XIcon} from "@/components";
 
-export const Search = (props: {
-    conditions: string[],
-    setConditions: Dispatch<SetStateAction<string[]>>,
-    setCurrentPage: Dispatch<SetStateAction<number>>,
+interface SearchProps {
+    condition: string,
+    setCondition: (value: string) => void,
     placeholder: string
-}) => {
+}
+
+export const Search = ({condition, setCondition, placeholder }: SearchProps) => {
     const [searchText, setSearchText] = useState('');
-    const [conditions, setConditions] = useState<string[]>([]);
+    const [conditionText, setConditionText] = useState<string>(condition);
 
     const addCondition = () => {
         if (searchText.trim() === '') return;
-        setConditions([searchText]);
-        props.setConditions([searchText]);
-        props.setCurrentPage(1);
+        setConditionText(searchText);
+        setCondition(searchText);
         setSearchText('');
     }
 
-    const removeCondition = (index: number) => {
-        let tmp = [...conditions];
-        tmp.splice(index, 1);
-        setConditions(tmp);
-        props.setConditions(tmp);
-        props.setCurrentPage(1);
+    const removeCondition = () => {
+        setConditionText('');
+        setCondition('');
     }
 
     return (<>
@@ -35,7 +32,7 @@ export const Search = (props: {
                     id="searchText"
                     value={searchText}
                     className="border w-96 max-w-lg px-4 py-2 rounded-l-md focus:outline-none"
-                    placeholder={props.placeholder}
+                    placeholder={placeholder}
                     onChange={(e) => setSearchText(e.target.value)}
                     onKeyDown={(e)=> {if (e.key === 'Enter') addCondition()}}
                 />
@@ -46,17 +43,17 @@ export const Search = (props: {
             </div>
         </div>
 
-        { conditions.length > 0 &&
+        { conditionText !== '' &&
             <div className="px-4 py-4 bg-gray-200 mt-2 rounded max-w-lg">
                 <p>検索条件</p>
                 <div className="mt-2">
-                    { conditions.map((item, index) => (
-                        <span key={index} className="relative border pl-2 pr-6 py-2 bg-white rounded leading-3 inline-block cursor-pointer hover:bg-gray-100 mr-1"
-                              onClick={() => removeCondition(index)}>
-                                        { item }
-                            <XIcon className="w-5 h-5 text-gray-400 absolute right-0 top-1.5 px-1 py-1" />
-                        </span>
-                    )) }
+                    <span
+                        className="relative border pl-2 pr-6 py-2 bg-white rounded leading-3 inline-block cursor-pointer hover:bg-gray-100 mr-1"
+                        onClick={() => removeCondition()}
+                    >
+                        { conditionText }
+                        <XIcon className="w-5 h-5 text-gray-400 absolute right-0 top-1.5 px-1 py-1" />
+                    </span>
                 </div>
             </div>
         }

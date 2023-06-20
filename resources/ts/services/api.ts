@@ -1,6 +1,5 @@
-import axios, { AxiosHeaders } from "axios";
-import { useSelector } from "react-redux"
-import { store } from '../store/store'
+import axios from "axios";
+import { store } from '@/store'
 // @ts-ignore
 let base = baseUrl + "/api/";
 

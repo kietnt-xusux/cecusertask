@@ -20,7 +20,6 @@ export const App = () => {
 
     if (Object.keys(user).length === 0) {
         // navigate(`/${getAdminRoute()}/login`);
-        console.log(44444444);
 
     }
 

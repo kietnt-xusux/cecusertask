@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {Auth, AuthUser, User} from "@/helper/type";
+import {AuthUser} from "@/helper/type";
 
 
 export default createSlice({
@@ -25,4 +25,3 @@ export default createSlice({
         },
     },
 });
-

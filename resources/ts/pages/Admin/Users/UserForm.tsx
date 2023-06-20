@@ -7,12 +7,9 @@ import {Input} from "@/components/Input";
 import AdminLayout from "@/pages/Admin/Common/AdminLayout";
 import {useDispatch} from "react-redux";
 import {commonConstants} from "@/constants";
-// import {userService} from "@/services";
 import swal from '@/helper/swal';
 import {getAdminRoute} from "@/helper/utils";
-import nprogress from "nprogress";
-import {toast} from "react-toastify";
-import userService from "@/services/modules/userService";
+import { userService } from "@/services";
 import commonConstant from "@/constants/common";
 
 const UserForm = () => {

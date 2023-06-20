@@ -1,8 +1,7 @@
-import service from "../service";
+import {service} from "../index";
 import apiUrl from "@/constants/url";
-import { store } from '@/store/store'
 
-const userService = {
+export const userService = {
     async index(params: any = {}) {
         const url = apiUrl.USERS.INDEX
 
@@ -38,5 +37,3 @@ const userService = {
         return service.post(url)
     },
 };
-
-export default userService;

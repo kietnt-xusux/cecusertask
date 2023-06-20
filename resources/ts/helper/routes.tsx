@@ -7,10 +7,11 @@ import AdminLogin from "@/pages/Admin/Auth/AdminLogin";
 import Profile from "@/pages/Admin/Users/Profile";
 import UserIndex from "@/pages/Admin/Users/UserIndex";
 import UserForm from "@/pages/Admin/Users/UserForm";
+import {RouteProps} from "@/helper/type";
 
 const adminRoute = getAdminRoute();
 
-export const routes = [
+export const routes: RouteProps[] = [
     // Common Page
     {
         title: '',
@@ -31,28 +32,26 @@ export const routes = [
     }, {
         title: 'ユーザー',
         path: `/${adminRoute}/users`,
-        exact: true,
-        private: true,
+        auth: true,
         admin: true,
         component: UserIndex
     }, {
         title: 'ユーザー登録',
         path: `/${adminRoute}/users/create`,
-        exact: true,
-        private: true,
+        auth: true,
         admin: true,
         component: UserForm
     }, {
         title: 'ユーザー変更',
         path: `/${adminRoute}/users/:id`,
-        private: true,
+        auth: true,
+        admin: true,
         component: UserForm
     },
     // Auth
     {
         title: 'ログイン',
         path: `/${adminRoute}/login`,
-        name: 'Login',
         component: AdminLogin,
     },
 ];

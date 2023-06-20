@@ -1,4 +1,4 @@
-import service from "../service";
+import service from "../index";
 import apiUrl from "@/constants/url";
 import ApiService from "../api";
 

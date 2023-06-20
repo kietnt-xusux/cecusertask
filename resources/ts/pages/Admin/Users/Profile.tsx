@@ -234,46 +234,6 @@ export default () => {
                             </div>
                         </div>
                     </div>
-                    <div className="max-w-lg w-full px-1 md:py-0">
-                        <div className="flex flex-col max-w-lg bg-gray-100 rounded">
-                            <div className="flex flex-col max-w-lg bg-gray-100 rounded">
-                                <div className="px-4 py-2 border-b font-bold">
-                                    印画像
-                                </div>
-                                <div className="px-4 py-4 mt-1 flex items-center justify-center">
-                                    { stamp ?
-                                        <div className="w-20">
-                                            <ImageWithLoading src={stamp} />
-                                        </div>:
-                                        <span className="inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100">
-                                            <UserIcon className="h-full w-full text-gray-300" />
-                                        </span>
-                                    }
-                                    <div className="flex flex-col flex-shrink-0">
-                                        <label
-                                            htmlFor="file-upload"
-                                            onClick={() => triggerStamp.current?.click()}
-                                            className={"ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm " +
-                                                "text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none " +
-                                                "focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 cursor-pointer"}>
-                                            画像を選択する
-                                        </label>
-                                        { newStamp ?
-                                            <button
-                                                type="button"
-                                                onClick={recoveryStamp}
-                                                className={"ml-5 mt-4 bg-white py-2 px-3 border border-red-500 rounded-md " +
-                                                    "shadow-sm text-sm leading-4 font-medium text-red-500 hover:bg-gray-50 " +
-                                                    "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"}
-                                            >
-                                                元の画像に戻す
-                                            </button> : ''
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div className="md:ml-8 ml-0 flex flex-col mt-4 md:mt-0 items-center md:items-start">
                         <button
                             type="button"

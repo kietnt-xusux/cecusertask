@@ -1,7 +1,8 @@
-import {getCostSituations} from "@/helper/utils";
+import Dashboard from "@/pages/Admin/Common/Dashboard";
 
 export type IsOverEval = (testString: string, fontSize: number, characterSpacing: number, boxWidth: number) => boolean
-import { rootReducer } from '@/store/store';
+import { rootReducer } from '@/store';
+import {JSX} from "react";
 
 export type RootState = ReturnType<typeof rootReducer>;
 
@@ -79,36 +80,30 @@ export interface ListBoxOption {
     value: string | number,
     disable?: boolean
 }
-export interface Profile {
-    id: bigint,
-    email: string,
-    name1: string,
-    name2: string,
-    name3: string,
-    name4: string,
-    role: string,
-    company: string,
-    zip : string,
-    tel : string,
-    fax : string,
-    pref : string,
-    address1 : string,
-    address2 : string,
-    address3 : string,
-    reg_date: string,
-    past_work: number
-}
-
-export interface Alphabets {
-    alphabet_id: number,
-    name: string,
-}
 
 export interface TableHeadField {
     name: string,
     title: string,
     noSort?: boolean,
     col?: number
+}
+
+export interface RouteProps {
+    title: string,
+    path: string,
+    private?: boolean,
+    auth?: boolean,
+    admin?: boolean,
+    component: () => JSX.Element,
+}
+
+export interface ConditionsProps {
+    perPage: number,
+    lastPage: number,
+    sortField: string,
+    sortValue: string,
+    page: number,
+    searchText: string,
 }
 
 export interface User {

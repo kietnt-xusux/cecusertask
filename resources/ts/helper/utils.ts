@@ -82,21 +82,6 @@ export const loadFont = async () => {
     return { fontRegular: fontRegular, fontBold: fontBold };
 }
 
-export const getCostSituations = (): ListBoxOption[] => {
-    return [
-        { id: 0, value: '', name: '選択' },
-        { id: 1, value: 'house', name: 'ハウス' },
-        { id: 2, value: 'mono', name: 'モノコング' },
-        { id: 3, value: 'toilet', name: 'トイレ' },
-        { id: 4, value: 'sink', name: 'シンク' },
-        { id: 5, value: 'fence', name: 'フェンス' },
-        { id: 6, value: 'fixtures', name: '備品' },
-        { id: 7, value: 'plumbing', name: '給排水' },
-        { id: 8, value: 'electric', name: '電気' },
-        { id: 9, value: 'air_conditioner', name: 'エアコン' },
-    ];
-}
-
 export const getHourOptions = (): ListBoxOption[] => {
     let result: ListBoxOption[] = [
         { id: 99, value: 99, name: '選択' }
@@ -141,4 +126,25 @@ export const convertStringToNumberOnChange = (e: any) => {
 
 export const classNames = (...classes: any[]) => {
     return classes.filter(Boolean).join(' ')
+}
+
+export const getDefaultConditions = () => {
+    return {
+        searchText: '',
+        page: 1,
+        perPage: 25,
+        lastPage: 1,
+        sortField: '',
+        sortValue: ''
+    }
+}
+
+export const getListPerpage = (): ListBoxOption[] => {
+    return [
+        { id: 1, value: 25, name: '25' },
+        { id: 2, value: 50, name: '50' },
+        { id: 3, value: 100, name: '100' },
+        { id: 4, value: 200, name: '200' },
+        { id: 5, value: 500, name: '500' },
+    ]
 }

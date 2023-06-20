@@ -62,7 +62,6 @@ export const PublicHeader = () => {
                 >
                     <MenuIcon />
                 </button>
-                <img src="/img/logo_full.svg" alt="" className="ml-2"/>
             </div>
 
             <div className="flex">

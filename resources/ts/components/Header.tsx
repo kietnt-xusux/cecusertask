@@ -8,8 +8,8 @@ import {ChevronDownIcon, MenuAlt2Icon, MenuIcon, UserIcon} from "@/components/Ic
 import {commonConstants} from "@/constants";
 // import {userService} from "@/services";
 import { getAdminRoute } from "@/helper/utils";
-import systemSlice from '@/store/modules/systemSlice';
-import userService from "@/services/modules/userService";
+import { systemSlice } from '@/store';
+import { userService } from "@/services";
 import authSlice from '@/store/modules/authSlice';
 
 export const Header = () => {
@@ -32,9 +32,6 @@ export const Header = () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, [wrapperRef]);
-    useEffect(() => {
-        dispatch(systemSlice.actions.setOpenMobileMenu(false))
-    }, [])
 
     const logout = (e: { preventDefault: () => void; }) => {
         e.preventDefault();

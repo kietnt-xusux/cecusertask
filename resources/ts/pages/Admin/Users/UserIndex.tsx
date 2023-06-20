@@ -1,43 +1,44 @@
 import React, {useEffect, useState} from "react";
-import {useDispatch} from "react-redux";
-import {commonConstants} from "@/constants";
+import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {ListBox, Pagination, TableHead, PlusIcon, LoadingIcon, Search} from "@/components";
-import {User} from "@/helper/type";
+import {ConditionsProps, RootState, User} from "@/helper/type";
 import UserItem from "@/pages/Admin/Users/UserItem";
-// import {userService} from "@/services";
 import AdminLayout from "@/pages/Admin/Common/AdminLayout";
-import { getAdminRoute } from "@/helper/utils";
-import userService from "@/services/modules/userService";
+import {getAdminRoute, getDefaultConditions, getListPerpage} from "@/helper/utils";
+import { systemSlice } from "@/store";
+import { userService } from "@/services";
 
 const UserIndex = () => {
+    const conditions = useSelector((state: RootState) => state.system.params);
+    const getConditions = () => {
+        return conditions && conditions.user ? conditions.user : getDefaultConditions();
+    }
+
+    const [params, setParams] = useState<ConditionsProps>(getConditions());
     const adminRoute = getAdminRoute();
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(true)
     const [users, setUsers] = useState<User[]>([])
-    const [page, setPage] = useState(1);
-    const [params, setParams] = useState<{
-        perPage: number,
-        lastPage: number,
-        sortField: string,
-        sortValue: string,
-    }>({perPage: 10, lastPage: 1, sortField: '', sortValue: ''});
 
     useEffect(() => {
-        dispatch({ type: commonConstants.SET_MENU, menu: 'user' });
-        console.log(444444442);
+        dispatch(systemSlice.actions.setMenu('user'));
+        getData();
+        dispatch(systemSlice.actions.setCondition({ key: 'user', data: params }));
+    },[params.perPage, params.sortField, params.sortValue, params.page, params.searchText]);
 
-        getData()
-    },[params.perPage, params.sortField, params.sortValue, page]);
+    const setPage = (page: number) => {
+        setParams({...params, page: page});
+    }
 
     const getData = async () => {
         setLoading(true);
         let data = {
             per_page: params.perPage,
-            last_page: params.lastPage,
             sort_field: params.sortField,
-            page: page,
-            sort_value: params.sortValue
+            page: params.page,
+            sort_value: params.sortValue,
+            search_text: params.searchText
         }
         const result  : any = await userService.index(data);
         setLoading(false);
@@ -47,15 +48,6 @@ const UserIndex = () => {
             setParams({...params, lastPage: result.data.meta.last_page})
         }
     }
-
-    const listPerPage = [
-        { id: 1, value: 10, name: '10' },
-        { id: 2, value: 15, name: '15' },
-        { id: 3, value: 25, name: '25' },
-        { id: 4, value: 50, name: '50' },
-        { id: 5, value: 100, name: '100' },
-    ];
-
     const fields = [
         { name: 'name', title: 'ユーザー名' },
         { name: 'email', title: 'メールアドレス' },
@@ -75,8 +67,11 @@ const UserIndex = () => {
 
     const handlePerPage = (value: any) => {
         setPage(1);
-
         setParams({...params, perPage: value})
+    }
+
+    const setSearchText = (value: string) => {
+        setParams({...params, searchText: value, page: 1})
     }
 
     return (
@@ -84,12 +79,15 @@ const UserIndex = () => {
             <div className="py-6 sm:px-6 lg:px-12">
                 <h2 className="text-3xl">ユーザー</h2>
 
-                {/* <Search conditions={conditions} setConditions={setConditions} setPage={setPage}
-                        placeholder={`ユーザー名で検索する`}/> */}
+                <Search
+                    condition={params.searchText}
+                    setCondition={setSearchText}
+                    placeholder={`ユーザー名で検索する`}
+                />
 
                 <div className="flex justify-between">
                     <div className="w-24 mt-2 flex">
-                        <ListBox options={listPerPage} value={params.perPage} className="w-full" handleOnchange={handlePerPage} />
+                        <ListBox options={getListPerpage()} value={params.perPage} className="w-full" handleOnchange={handlePerPage} />
                     </div>
                     <Link to={`/${adminRoute}/users/create`} className="leading-8 text-blue-500" >
                         <PlusIcon className="inline-block h-5 w-5" />
@@ -132,7 +130,13 @@ const UserIndex = () => {
                                     </table>
                                 </div>
 
-                                { params.lastPage > 1 && <Pagination page={page} lastPage={params.lastPage} setPage={setPage} path='/users' />}
+                                { params.lastPage > 1 &&
+                                    <Pagination
+                                        page={params.page}
+                                        lastPage={params.lastPage}
+                                        setPage={setPage}
+                                        path={`/${getAdminRoute()}/users`}
+                                    />}
                             </div>
                         </div>
                     </div>

@@ -37,20 +37,6 @@ class UserController extends ApiController
         ];
     }
 
-    public function index()
-    {
-        $condition = request()->query('search_text', '');
-        $perPage = request()->query('per_page', 10);
-        $sortField = request()->query('sort_field', '');
-        $sortValue = request()->query('sort_value', 'asc');
-        $kind = request('kind');
-        // dd(request());
-        $query = User::query();
-        if (!empty($sortField)) $query->orderBy($sortField, $sortValue);
-
-        return UserResource::collection($query->paginate($perPage));
-    }
-
     function getUser() {
         $id = request()->query('id', 0);
         $query = User::query()->where('id', $id)->first();
