@@ -1,7 +1,8 @@
 import {service} from "../index";
 import apiUrl from "@/constants/url";
+import {ServiceProps} from "@/helper/type";
 
-export const userService = {
+const userService: ServiceProps = {
     async index(params: any = {}) {
         const url = apiUrl.USERS.INDEX
 
@@ -37,3 +38,5 @@ export const userService = {
         return service.post(url)
     },
 };
+
+export default userService;

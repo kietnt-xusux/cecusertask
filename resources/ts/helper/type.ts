@@ -57,10 +57,8 @@ export interface LocationState {
     detail_id: string,
 }
 
-export interface CommonData {
-    units: ListBoxOption[],
-    merchants: ListBoxOption[],
-    vendors: ListBoxOption[],
+export interface ServiceProps {
+    [K:string] : (params?: any, ...attr: any) => Promise<any>
 }
 
 export interface Field {

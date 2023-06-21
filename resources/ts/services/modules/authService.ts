@@ -1,8 +1,8 @@
-import service from "../index";
 import apiUrl from "@/constants/url";
 import ApiService from "../api";
+import {ServiceProps} from "@/helper/type";
 
-const authService = {
+const authService: ServiceProps = {
     async login(params: any = {}) {
         try {
             const result = await ApiService.post(apiUrl.LOGIN, params);

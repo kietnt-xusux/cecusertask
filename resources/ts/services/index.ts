@@ -1,17 +1,17 @@
 import ApiService from "./api";
 import {setStatus} from '@/store/modules/loadingSlice';
 import {store} from '@/store'
-// import {getAdminRoute} from "@/helper/utils";
 import {redirect} from "react-router-dom";
 import {getAdminRoute} from "@/helper/utils";
 import commonConstant from "@/constants/common";
+import {ServiceProps} from "@/helper/type";
 
 const ERROR_CODE_VALIDATE = 422;
 const ERROR_CODE_UNAUTHORIZED = 401;
 const ERROR_CODE_NOT_FOUND = 404;
 const adminRoute = getAdminRoute();
 
-export const service: {[key: string]: (url?: any, params?: any) => Promise<any>} = {
+export const service: ServiceProps = {
     async post(url: string, params = {}) {
         try {
             store.dispatch(setStatus(true))
@@ -165,4 +165,4 @@ export const service: {[key: string]: (url?: any, params?: any) => Promise<any>}
     },
 };
 
-export * from './modules/userService';
+export { default as userService } from './modules/userService';

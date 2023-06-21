@@ -7,7 +7,7 @@ interface SystemStateProps {
     params: {[key: string]: any},
 }
 
-export const systemSlice = createSlice({
+export default createSlice({
     name: "dashboard",
     initialState: {
         menu: 'dashboard',

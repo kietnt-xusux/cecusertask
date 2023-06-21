@@ -5,12 +5,9 @@ import {Transition} from "@headlessui/react";
 import {Link, useNavigate} from "react-router-dom";
 import {RootState} from "@/helper/type";
 import {ChevronDownIcon, MenuAlt2Icon, MenuIcon, UserIcon} from "@/components/Icon";
-import {commonConstants} from "@/constants";
-// import {userService} from "@/services";
 import { getAdminRoute } from "@/helper/utils";
-import { systemSlice } from '@/store';
+import { systemSlice, authSlice } from '@/store';
 import { userService } from "@/services";
-import authSlice from '@/store/modules/authSlice';
 
 export const Header = () => {
     const adminRoute = getAdminRoute();
