@@ -5,6 +5,7 @@ import {redirect} from "react-router-dom";
 import {getAdminRoute} from "@/helper/utils";
 import commonConstant from "@/constants/common";
 import {ServiceProps} from "@/helper/type";
+import authSlice from '@/store/modules/authSlice';
 
 const ERROR_CODE_VALIDATE = 422;
 const ERROR_CODE_UNAUTHORIZED = 401;
@@ -144,6 +145,7 @@ export const service: ServiceProps = {
                     errors: e.response ? e.response.data.errors : "error",
                 };
             case ERROR_CODE_UNAUTHORIZED:
+                store.dispatch(authSlice.actions.logoutSuccess())
                 return redirect(adminRoute + "/login");
             case ERROR_CODE_NOT_FOUND:
                 if (responseData.route_name) {
