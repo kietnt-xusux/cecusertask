@@ -3,11 +3,13 @@
 /public/build
 /public/hot
 /public/storage
+/public/dist
 /storage/*.key
 /vendor
 .env
 .env.backup
 .env.production
+.phpactor.json
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
@@ -17,3 +19,7 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+/.zed
+.next
+/src/.next
+/src/out
