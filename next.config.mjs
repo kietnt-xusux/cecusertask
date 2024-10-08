@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     output: "export",
-    basePath: "/build"
+    distDir: '../public/build',
+    assetPrefix: '/build'
 };
 
 export default nextConfig;
