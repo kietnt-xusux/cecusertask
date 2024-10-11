@@ -43,4 +43,8 @@ $ yarn build
 ## Develop
 ``` bash
 $ yarn dev
+
+/node_modules/next/dist/client/components/app-router.js
+317
+origin: 'http://localhost:3000'
 ```

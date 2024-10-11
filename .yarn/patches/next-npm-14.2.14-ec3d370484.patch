@@ -1,0 +1,13 @@
+diff --git a/dist/client/components/app-router.js b/dist/client/components/app-router.js
+index 5b5d439889570ddaef38582c03692658e8a3f55d..17f489059e3ba554b859812a483746e168158fb4 100644
+--- a/dist/client/components/app-router.js
++++ b/dist/client/components/app-router.js
+@@ -314,7 +314,7 @@ function Head(param) {
+                     (0, _react.startTransition)(()=>{
+                         dispatch({
+                             type: _routerreducertypes.ACTION_FAST_REFRESH,
+-                            origin: window.location.origin
++                            origin: 'http://localhost:3000'
+                         });
+                     });
+                 }

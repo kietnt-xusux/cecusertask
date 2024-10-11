@@ -7,7 +7,7 @@
     "build": "next build src"
   },
   "dependencies": {
-    "next": "14.2.14",
+    "next": "patch:next@npm%3A14.2.14#~/.yarn/patches/next-npm-14.2.14-ec3d370484.patch",
     "react": "^18",
     "react-dom": "^18"
   },
