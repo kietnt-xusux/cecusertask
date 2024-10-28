@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Enums\Role;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Exception;
@@ -21,12 +20,6 @@ class AuthController extends ApiController
     {
         $credentials = request(['email', 'password']);
         $remember = request('remember');
-
-        $email = $credentials['email'];
-        $credentials['email'] = function ($query) use ($email) {
-            return $query->orWhere('email', $email)
-                ->orWhere('line_work_email', $email);
-        };
 
         if (!auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
@@ -194,9 +187,8 @@ class AuthController extends ApiController
     protected function _getAbility(): string
     {
         $role = auth()->user()->role;
-
-        if ($role == Role::ADMIN->value) return "admin";
-        if ($role == Role::MANAGER->value) return "manager";
-        return "user";
+        $roles = config('common.roles');
+        if (!in_array($role, $roles)) return 'user';
+        return array_search($role, $roles);
     }
 }

@@ -4,15 +4,15 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
+if (env('APP_ENV') === 'local') {
+    Route::get('/script.js', function () {
+        return view('script')->render();
+    });
 
-Route::get('/{any?}', function ($any = null) {
-    return view('app')->with('any', $any);
-})->where('any', '.*');;
-
-Route::get('/test', function () {
-    return 'First sub domain';
-})->domain('blog.next-js.test');
-
+    Route::get('/{any?}', function ($any = null) {
+        return view('app')->with('any', $any);
+    })->where('any', '.*');
+}
 
 /**
  * Route serving static file in build folder: js, css, image

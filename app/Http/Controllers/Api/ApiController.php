@@ -121,7 +121,7 @@ class ApiController extends Controller
         $itemId = request()->{$this->_alias};
         $item   = call_user_func([$this->_model, 'find'], $itemId);
         if (empty($item)) return $this->responseNotFound();
-        return new $this->_resource($item);
+        return call_user_func([$this->_resource, 'make'], $item);
     }
 
     public function store()
@@ -130,7 +130,7 @@ class ApiController extends Controller
         $item = call_user_func([$this->_model, 'create'], $data);
         $this->_afterSave($item);
         $resourceName = $this->_resource;
-        return new $resourceName($item);
+        return call_user_func([$this->_resource, 'make'], $item);
     }
 
     public function update()

@@ -15,17 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::domain('api.next-js.test')->group(function () {
+Route::namespace('Api')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('logout', [AuthController::class, 'logout']);
 
     Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
     Route::put('forgot-password', [AuthController::class, 'checkToken']);
     Route::post('reset-password', [AuthController::class, 'resetPassword']);
-
-    Route::apiResource('user', UserController::class);
 });
-
-
-
