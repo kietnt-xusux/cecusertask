@@ -2,23 +2,26 @@
   "name": "next-js",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "yarn@4.5.1",
   "scripts": {
     "dev": "next dev src",
     "build": "next build src"
   },
   "dependencies": {
-    "next": "patch:next@npm%3A14.2.14#~/.yarn/patches/next-npm-14.2.14-ec3d370484.patch",
+    "next": "^15.0.2",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
     "@headlessui/react": "^2.1.10",
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "axios": "^1.7.7",
     "clsx": "^2.1.1",
     "cropperjs": "^1.6.2",
+    "js-cookie": "^3.0.5",
     "postcss": "^8",
     "react-toastify": "^10.0.5",
     "tailwindcss": "^3.4.1",

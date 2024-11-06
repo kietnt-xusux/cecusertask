@@ -4,12 +4,13 @@ import {ToastContainer} from "react-toastify";
 import Link from "next/link";
 import Image from "next/image";
 import {AdminHeader} from "@/components/Admin/AdminHeader";
-import isAdminAuth from "@/components/Admin/AdminAuth";
+import {AdminAuth} from "@/components";
 
 const AdminLayout = ({children}: Readonly<{
     children: React.ReactNode;
 }>) => {
-    return <>
+
+    return <AdminAuth>
         <ToastContainer hideProgressBar={true} autoClose={5000} />
         <div className="flex w-full min-h-screen">
             <div className="flex-col h-screen bg-[#004EA2] w-[247px] px-4 py-8 shrink-0 hidden sm:flex">
@@ -34,6 +35,6 @@ const AdminLayout = ({children}: Readonly<{
                 </div>
             </div>
         </div>
-    </>;
+    </AdminAuth>;
 }
-export default isAdminAuth(AdminLayout);
+export default AdminLayout;

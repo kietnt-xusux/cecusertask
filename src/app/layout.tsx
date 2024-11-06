@@ -1,6 +1,5 @@
 import type {Metadata} from "next";
 import "./globals.css";
-import StoreProvider from "@/stores";
 
 export const metadata: Metadata = {
     title: "Base",
@@ -13,9 +12,7 @@ export default function RootLayout({children}: Readonly<{
     return (
         <html lang="ja" suppressHydrationWarning={true}>
         <body suppressHydrationWarning={true}>
-            <StoreProvider lastUpdate={new Date().getTime()}>
-                {children}
-            </StoreProvider>
+            {children}
         </body>
         </html>
     );

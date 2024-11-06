@@ -18,7 +18,12 @@ return Application::configure(basePath: dirname(__DIR__))
         },
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->validateCsrfTokens(except: [
+            '/admin/login'
+        ]);
+        $middleware->encryptCookies(except: [
+            'next_session',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

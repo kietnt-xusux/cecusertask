@@ -9,3 +9,7 @@ export const randomString = (length?: number, type?: string) => {
     }
     return result;
 }
+
+export const isClient = (): boolean => {
+    return typeof window !== 'undefined';
+}

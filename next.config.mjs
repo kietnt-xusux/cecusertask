@@ -17,7 +17,12 @@ const nextConfig = (phase, {defaultConfig}) => {
                         ],
                     },
                 ]
-            }
+            },
+            experimental: {
+                serverActions: {
+                    allowedOrigins: ['base.lol'],
+                },
+            },
         } :
         {
             output: 'export',

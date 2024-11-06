@@ -1,7 +1,7 @@
 "use client";
 
-import axios, {AxiosHeaders} from "axios";
-import { useStore } from "@/stores/auth.storage";
+import axios from "axios";
+import {useAuthenticationStore} from "@/stores";
 
 const getBaseUrl = () => {
     if (typeof window !== "undefined") {
@@ -17,7 +17,7 @@ axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 axios.defaults.headers.common['X-Request-With'] = 'XMLHttpRequest';
 
 axios.interceptors.request.use(async function (config : any) {
-    let state = useStore(state => state);
+    let state = useAuthenticationStore.getState();
     if (state.user) {
         config.headers.Authorization = `Bearer ${state.user.access_token}`
     }
@@ -34,9 +34,6 @@ const api = {
             const res = await axios.request({...config, url, params, data, method: method, headers});
             return res.data;
         } catch (e: any) {
-            if (e && typeof e === 'object' && e.response && e.response.status === 401) {
-                useStore(state => state).logout();
-            }
             return Promise.reject(e.response?.data ?? { status: 500, message: e.message });
         }
     },
