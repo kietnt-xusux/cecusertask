@@ -49,7 +49,7 @@ if (config('app.env') === 'local') {
     })->where('any', '^\/build.*|.*txt$');
 
     Route::get('/{any}', function (string $any) {
-        $re = '/.*\/(?=\d$|create$)/m';
+        $re = '/.*\/(?=\d*$|create$)/m';
         preg_match_all($re, $any, $matches, PREG_SET_ORDER);
         $path = public_path('build/' . $matches[0][0] . 'detail.html');
         if (File::exists($path)) {
@@ -61,8 +61,6 @@ if (config('app.env') === 'local') {
     Route::get('/{any?}', function ($any = null) {
         $path = public_path('build/' . $any . '.html');
         if (File::exists($path)) {
-
-            //return response($response->getBody()->getContents(), $response->getStatusCode())->withHeaders($response->getHeaders());
             return response()->file($path);
         }
         return response()->file('build/404.html');
