@@ -23,3 +23,12 @@ Route::namespace('Api')->group(function () {
     Route::put('forgot-password', [AuthController::class, 'checkToken']);
     Route::post('reset-password', [AuthController::class, 'resetPassword']);
 });
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('me', [AuthController::class, 'me']);
+});
+
+Route::middleware(['auth:sanctum', 'ability:admin'])->group(function () {
+    Route::post('update-profile', [AuthController::class, 'updateProfile']);
+    Route::apiResource('user', UserController::class);
+});

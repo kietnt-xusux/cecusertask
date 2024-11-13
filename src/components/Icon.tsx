@@ -124,3 +124,99 @@ export const UserIcon = ({className}: { className?: string }) => (
             d='M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z'/>
     </svg>
 );
+
+export const ChipIcon = ({className}: { className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
+         className={className ?? "size-6"}>
+        <path strokeLinecap="round" strokeLinejoin="round"
+              d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 0 0 2.25-2.25V6.75a2.25 2.25 0 0 0-2.25-2.25H6.75A2.25 2.25 0 0 0 4.5 6.75v10.5a2.25 2.25 0 0 0 2.25 2.25Zm.75-12h9v9h-9v-9Z"/>
+    </svg>
+)
+
+
+export const SearchIcon = ({className}: { className?: string }) => (
+    <svg xmlns='http://www.w3.org/2000/svg' className={className ?? 'size-5'} viewBox='0 0 20 20' fill='currentColor'>
+        <path
+            fillRule='evenodd'
+            d='M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z'
+            clipRule='evenodd'
+        />
+    </svg>
+)
+
+export const DocumentPlusIcon = ({className}: { className?: string }) => (
+    <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className={className ?? 'size-5'}>
+        <path
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            d='M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z'
+        />
+    </svg>
+);
+
+export const ChevronUpIcon = ({className}: { className?: string }) => (
+    <svg xmlns='http://www.w3.org/2000/svg' className={className ?? 'size-5'} viewBox='0 0 20 20' fill='currentColor'>
+        <path
+            fillRule='evenodd'
+            d='M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z'
+            clipRule='evenodd'
+        />
+    </svg>
+);
+
+export const ChevronRightIcon = ({className}: { className?: string }) => (
+    <svg xmlns='http://www.w3.org/2000/svg' className={className ?? 'size-5'} viewBox='0 0 20 20' fill='currentColor'>
+        <path
+            fillRule='evenodd'
+            d='M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z'
+            clipRule='evenodd'
+        />
+    </svg>
+)
+
+export const ChevronLeftIcon = ({className}: { className?: string }) => (
+    <svg xmlns='http://www.w3.org/2000/svg' className={className ?? 'size-5'} viewBox='0 0 20 20' fill='currentColor'>
+        <path
+            fillRule='evenodd'
+            d='M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z'
+            clipRule='evenodd'
+        />
+    </svg>
+)
+
+export const CalendarIcon = ({className}: { className?: string }) => (
+    <svg width='23' height='23' viewBox='0 0 23 23' fill='none' xmlns='http://www.w3.org/2000/svg' className={className ?? 'size-5'}>
+        <g id='calendar_fill'>
+            <path
+                d='M5.11113 1.27778C5.11113 0.572082 5.68321 0 6.38891 0C7.09461 0 7.66669 0.572082 7.66669 1.27778V2.55556H15.3334V1.27778C15.3334 0.572082 15.9055 0 16.6112 0C17.3169 0 17.8889 0.572082 17.8889 1.27778V2.55556H20.4445C21.8559 2.55556 23.0001 3.69973 23.0001 5.11113V8.94447H0V5.11113C0 3.69973 1.14416 2.55556 2.55556 2.55556H5.11113V1.27778Z'
+                fill='#5C5C5C'
+            />
+            <path
+                d='M0 11.5H23.0001V20.4445C23.0001 21.8559 21.8559 23.0001 20.4445 23.0001H2.55556C1.14416 23.0001 0 21.8559 0 20.4445V11.5Z'
+                fill='#5C5C5C'
+            />
+        </g>
+    </svg>
+)
+
+export const ArrowLongLeftIcon = ({className}: { className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
+         className={className ?? 'size-5'}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18"/>
+    </svg>
+)
+
+export const ArrowLongRightIcon = ({className}: { className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
+         className={className ?? 'size-5'}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"/>
+    </svg>
+)
+
+export const UserCircleSolidIcon = ({className}: { className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
+         className={className ?? 'size-6'}>
+        <path strokeLinecap="round" strokeLinejoin="round"
+              d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/>
+    </svg>
+)

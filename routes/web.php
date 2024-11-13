@@ -28,10 +28,6 @@ if (config('app.env') === 'local') {
             'body' => json_encode(request()->all()),
         ];
 
-        if (request()->method() === 'POST') {
-            $a = 2;
-        }
-
         $response = $client->request(
             request()->method(),
             $https.'://'.$domain.'/'.$any,
@@ -52,9 +48,21 @@ if (config('app.env') === 'local') {
         abort(404);
     })->where('any', '^\/build.*|.*txt$');
 
+    Route::get('/{any}', function (string $any) {
+        $re = '/.*\/(?=\d$|create$)/m';
+        preg_match_all($re, $any, $matches, PREG_SET_ORDER);
+        $path = public_path('build/' . $matches[0][0] . 'detail.html');
+        if (File::exists($path)) {
+            return response()->file($path);
+        }
+        abort(404);
+    })->where('any', '.*\/\d$');
+
     Route::get('/{any?}', function ($any = null) {
         $path = public_path('build/' . $any . '.html');
         if (File::exists($path)) {
+
+            //return response($response->getBody()->getContents(), $response->getStatusCode())->withHeaders($response->getHeaders());
             return response()->file($path);
         }
         return response()->file('build/404.html');

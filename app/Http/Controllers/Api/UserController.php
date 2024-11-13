@@ -50,7 +50,6 @@ class UserController extends ApiController
         $perPage     = request()->query('per_page', 10);
         $sortField   = request()->query('sort_field', 'id');
         $sortValue   = request()->query('sort_value', 'asc');
-        $showDeleted = request()->query('show_deleted', 0);
 
         $query = User::query();
         $query->orderBy($sortField, $sortValue);
@@ -76,7 +75,7 @@ class UserController extends ApiController
     public function show()
     {
         $userId = request()->user;
-        $user   = User::query()->where(['id' => $userId])->withTrashed()->first();
+        $user   = User::query()->where(['id' => $userId])->first();
         if (empty($user)) {
             return $this->responseNotFound();
         }

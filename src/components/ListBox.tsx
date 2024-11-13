@@ -1,7 +1,4 @@
 import {
-    Combobox, ComboboxInput,
-    ComboboxOption,
-    ComboboxOptions,
     Listbox,
     ListboxButton,
     ListboxOption,

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->tinyInteger('role')->default('1')->comment('1 - User, 2 - Manager, 6 - Admin');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
