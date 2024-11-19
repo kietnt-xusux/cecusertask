@@ -1,17 +1,16 @@
 'use client';
 
 import {toast, ToastContainer} from "react-toastify";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {EyeIcon, EyeSlashIcon, LoadingIcon} from "@/components";
 import clsx from "clsx";
 import Link from "next/link";
 import {userService} from "@/services";
+import { useStore } from "@/stores/auth.storage";
 import {useRouter} from "next/navigation";
-import {useAuthenticationStore} from "@/stores";
-import Cookies from 'js-cookie'
 
 const AdminLoginPage = () => {
-    const authentication = useAuthenticationStore(store => store);
+    const authentication = useStore(store => store);
     const [loading, setLoading] = useState(false);
     const [check, setCheck] = useState(false);
     const [email, setEmail] = useState('');
@@ -22,15 +21,13 @@ const AdminLoginPage = () => {
     const handleSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         setCheck(true);
+        console.log('ssssssssss');
         if (email === '' || password === '') return;
         setLoading(true);
-        userService.login({ email, password}).then(async res => {
-            authentication.login({access_token: res.access_token, token_type: res.token_type});
+        userService.login({ email, password}).then(res => {
+            authentication.login({ access_token: res.access_token, token_type: res.token_type });
             authentication.update(res.detail);
-            Cookies.set('next_session', JSON.stringify(res.detail), {
-                expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
-            });
-            router.replace('/admin');
+            router.replace('/admin', {});
         }).catch(error => {
             console.log(error);
             setLoading(false);

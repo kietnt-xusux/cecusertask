@@ -3,16 +3,15 @@
 import Link from "next/link";
 import {ChevronDownIcon, UserIcon} from "@/components";
 import {useEffect, useRef, useState} from "react";
+import {useStore} from "@/stores/auth.storage";
 import {Transition} from "@headlessui/react";
 import {userService} from "@/services";
 import {useRouter} from "next/navigation";
-import {useAuthenticationStore} from "@/stores";
-import Cookies from "js-cookie";
 
 export const AdminHeader = () => {
     const [isOpen, setOpen] = useState(false);
     const wrapperRef = useRef<HTMLDivElement>(null);
-    const auth = useAuthenticationStore(state => state);
+    const auth = useStore(state => state);
     const router = useRouter();
 
     useEffect(() => {
@@ -31,7 +30,6 @@ export const AdminHeader = () => {
         e.preventDefault();
         userService.logout().then(() => {
             auth.logout();
-            Cookies.remove('next_session');
             router.replace('/admin/login');
         });
     };

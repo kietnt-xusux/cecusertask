@@ -18,25 +18,3 @@ export interface ListBoxOption {
     value: string | number;
     disable?: boolean;
 }
-
-export interface TableHeadField {
-    name: string;
-    title: string;
-    noSort?: boolean;
-    col?: number;
-}
-
-export interface Field {
-    name: string;
-    validateOptions?: any;
-    defaultValue: string | number;
-    label: string;
-    placeholder?: string;
-    options?: ListBoxOption[];
-    optionsV2?: any;
-    type?: string;
-    full?: boolean;
-    classWidth?: string;
-    value?: number;
-    disabled?: boolean;
-}

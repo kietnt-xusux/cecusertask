@@ -2,37 +2,30 @@
 
 import {ToastContainer} from "react-toastify";
 import Link from "next/link";
+import Image from "next/image";
 import {AdminHeader} from "@/components/Admin/AdminHeader";
-import {AdminAuth, ChipIcon} from "@/components";
-import AdminNav from "@/components/Admin/AdminNav";
-import {useEffect} from "react";
-import {useAuthenticationStore} from "@/stores";
-import {userService} from "@/services";
+import isAdminAuth from "@/components/Admin/AdminAuth";
 
 const AdminLayout = ({children}: Readonly<{
     children: React.ReactNode;
 }>) => {
-    const auth = useAuthenticationStore();
-    useEffect(() => {
-        console.log(auth.loggedIn);
-        auth.user && userService.me().then(res => {
-            auth.update(res)
-        });
-    }, [auth.loggedIn]);
-
-    return <AdminAuth>
+    return <>
         <ToastContainer hideProgressBar={true} autoClose={5000} />
         <div className="flex w-full min-h-screen">
-            <div className="flex-col h-screen bg-teal-450 w-60 px-4 py-4 shrink-0 hidden sm:flex">
-                <div className="flex justify-center">
-                    <Link
-                        href="/admin"
-                        className=""
-                    >
-                        <ChipIcon className="size-12 text-white" />
-                    </Link>
-                </div>
-                <AdminNav />
+            <div className="flex-col h-screen bg-[#004EA2] w-[247px] px-4 py-8 shrink-0 hidden sm:flex">
+                <Link
+                    href="/admin"
+                    className=""
+                >
+                    <Image
+                        src="/images/common/logo_full.svg"
+                        alt="logo"
+                        width={167}
+                        height={42}
+                        priority={true}
+                    />
+                </Link>
+                <h2 className="mt-5 text-white">日報管理画面</h2>
             </div>
             <div className="flex flex-col w-full overflow-hidden">
                 <AdminHeader/>
@@ -41,6 +34,6 @@ const AdminLayout = ({children}: Readonly<{
                 </div>
             </div>
         </div>
-    </AdminAuth>;
+    </>;
 }
-export default AdminLayout;
+export default isAdminAuth(AdminLayout);
