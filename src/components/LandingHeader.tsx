@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { MailIcon, MapPinIcon } from '@/components';
 
 const LandingHeader = () => {
+    const [openLanguage, setOpenLanguage] = useState(false);
+
     return (
         <div className='bg-gray-650'>
             <div className='max-w-7xl flex justify-center items-center text-white mx-auto min-h-3'>
