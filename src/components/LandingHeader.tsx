@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { MailIcon, MapPinIcon } from '@/components';
 
 const LandingHeader = () => {
