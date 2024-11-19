@@ -1,6 +1,5 @@
 'use client';
 import { useStore } from '@/stores/auth.storage';
-import { useEffect } from 'react';
 
 export default function isAdminAuth(Component: any) {
     return function isAdminAuth(props: any) {

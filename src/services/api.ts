@@ -1,6 +1,6 @@
 'use client';
 
-import axios, { AxiosHeaders } from 'axios';
+import axios from 'axios';
 import { useStore } from '@/stores/auth.storage';
 
 const getBaseUrl = () => {

@@ -1,13 +1,4 @@
-import {
-    Combobox,
-    ComboboxInput,
-    ComboboxOption,
-    ComboboxOptions,
-    Listbox,
-    ListboxButton,
-    ListboxOption,
-    ListboxOptions
-} from '@headlessui/react';
+import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from './Icon';
 import { ListBoxOption } from '@/helper/type';
 import clsx from 'clsx';
