@@ -25,7 +25,6 @@ const UserForm = () => {
     useEffect(() => {
         let regex = /\d*$/,
             result = regex.exec(pathname);
-        console.log(result);
         id.current = result ? result[0] : null;
 
         if (id.current) {

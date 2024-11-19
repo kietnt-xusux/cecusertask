@@ -14,7 +14,6 @@ const AdminLayout = ({children}: Readonly<{
 }>) => {
     const auth = useAuthenticationStore();
     useEffect(() => {
-        console.log(auth.loggedIn);
         auth.user && userService.me().then(res => {
             auth.update(res)
         });
