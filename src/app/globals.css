@@ -1,9 +1,0 @@
-@import '~react-toastify/dist/ReactToastify.min.css';
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-body {
-    margin-bottom: 0 !important;
-}

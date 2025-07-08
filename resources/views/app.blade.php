@@ -1,18 +1,21 @@
-<script>
-    let baseUrl = '{{ env('APP_URL') }}', loadedFont,
-        appName = '{{ env('APP_NAME') }}',
-        env = '{{ env('APP_ENV') }}';
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" @class(['dark' => ($appearance ?? 'system') == 'dark'])>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    const windowHeight = () => {
-        const doc = document.documentElement
-        doc.style.setProperty('--window-height', `${window.innerHeight}px`)
-    }
-    window.addEventListener('resize', windowHeight);
-    windowHeight();
-</script>
+        <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
-{!!
-    file_get_contents('http://localhost:3000/' . $any, false , stream_context_create([
-        'http' => array('ignore_errors' => true),
-    ]));
-!!}
+        <link rel="icon" href="/favicon.ico" sizes="any">
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+        @routes
+        @viteReactRefresh
+        @vite(['resources/js/app.tsx', "resources/js/pages/{$page['component']}.tsx"])
+        @inertiaHead
+    </head>
+    <body class="font-sans antialiased">
+        @inertia
+    </body>
+</html>

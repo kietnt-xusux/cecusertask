@@ -1,68 +1,19 @@
 <?php
 
-use Illuminate\Http\Client\Request;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Http;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use GuzzleHttp\Client;
+use Inertia\Inertia;
 
-if (config('app.env') === 'local') {
-    Route::any('/{any?}', function($any = null) {
-        $https = 'http';
-        $domain = 'localhost:3000';
+Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', function () {
+        return Inertia::render('admin/dashboard');
+    })->name('dashboard');
 
-        $client = new Client();
-        $headers = collect(request()->headers->all())
-            ->map(function ($item, $key) { return $item[0]; })
-            ->all();
-        $headers['host'] = $domain;
+    Route::resource('users', UserController::class);
+});
 
-        $opts = [
-            'http_errors' => false,
-            'verify' => false,
-            'allow_redirects' => ['max' => 10],
-            'timeout' => 10,
-            'connect_timeout' => 10,
-            'read_timeout' => 10,
-            'headers' => $headers,
-            'body' => json_encode(request()->all()),
-        ];
+Route::get('/', function () {
+    return Inertia::render('welcome');
+})->name('home');
 
-        $response = $client->request(
-            request()->method(),
-            $https.'://'.$domain.'/'.$any,
-            $opts
-        );
-
-        return response($response->getBody()->getContents(), $response->getStatusCode())->withHeaders($response->getHeaders());
-    })->where('any', '.*');
-} else {
-    /**
-     * Route serving static file in build folder: js, css, image
-     */
-    Route::get('/{any}', function (string $any) {
-        $path = public_path('build/' . $any);
-        if (File::exists($path)) {
-            return response()->file($path);
-        }
-        abort(404);
-    })->where('any', '^\/build.*|.*txt$');
-
-    Route::get('/{any}', function (string $any) {
-        $re = '/.*\/(?=\d*$|create$)/m';
-        preg_match_all($re, $any, $matches, PREG_SET_ORDER);
-        $path = public_path('build/' . $matches[0][0] . 'detail.html');
-        if (File::exists($path)) {
-            return response()->file($path);
-        }
-        abort(404);
-    })->where('any', '.*\/\d$');
-
-    Route::get('/{any?}', function ($any = null) {
-        $path = public_path('build/' . $any . '.html');
-        if (File::exists($path)) {
-            return response()->file($path);
-        }
-        return response()->file('build/404.html');
-    })->where('any', '.*');
-}
+require __DIR__.'/auth.php';

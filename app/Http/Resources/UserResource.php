@@ -2,10 +2,9 @@
 
 namespace App\Http\Resources;
 
-use App\Enums\Role;
+use App\Enums\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Carbon;
 
 class UserResource extends JsonResource
 {
@@ -20,9 +19,9 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
-            'role' => $this->role,
-            'picture' => $this->picture,
-            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'role' => UserRole::labelFromValue($this->role),
+            'avatar' => $this->picture,
+            'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
         ];
     }
 }

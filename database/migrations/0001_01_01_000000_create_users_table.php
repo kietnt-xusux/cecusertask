@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->tinyInteger('role')->default('1')->comment('1 - User, 2 - Manager, 6 - Admin');
             $table->rememberToken();
+            $table->string('avatar')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

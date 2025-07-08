@@ -25,3 +25,4 @@ yarn-error.log
 /src/out
 /.yarn/install-state.gz
 /**/.DS_Store
+/bootstrap/ssr

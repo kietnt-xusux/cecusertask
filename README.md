@@ -1,6 +1,6 @@
 # Base project
 
-Laravel 11 + NextJS + Typescript + Zudstand + Tailwindcss
+Laravel + React + Tailwindcss + Vite + Zustand
 
 ## Installing
 
@@ -16,24 +16,14 @@ $ php artisan db:seed
 $ php artisan storage:link
 ```
 
-## Configuration
-
-``` bash
-Edit .env
+## Env
+```
 APP_URL
-API_URL
-BUILD_DIR
-
-Database config
+DB_DATABASE
+DB_USERNAME
+DB_PASSWORD
 ```
 
-## NextJS Config
-```bash
-const nextConfig = {
-    output: "export",
-    basePath: env('BUILD_DIR')
-};
-```
 ## Build
 
 ``` bash
@@ -43,8 +33,26 @@ $ yarn build
 ## Develop
 ``` bash
 $ yarn dev
-
-/node_modules/next/dist/client/components/app-router.js
-317
-origin: 'http://localhost:3000'
 ```
+
+## Referer document
+### Tailwindcss
+https://tailwindcss.com/
+### Vite
+https://vitejs.dev/
+### Laravel
+https://laravel.com/
+### React js
+https://reactjs.org/
+### Sheet js (xlsx)
+https://github.com/SheetJS/sheetjs
+### Headless UI
+https://headlessui.dev/
+### Cropper js
+https://github.com/fengyuanchen/cropperjs
+### React router
+https://reactrouter.com/
+### Zustand
+https://docs.pmnd.rs/zustand/getting-started/introduction
+### Inertiajs
+https://inertiajs.com/
