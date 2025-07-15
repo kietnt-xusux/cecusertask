@@ -81,16 +81,16 @@ class DefaultController extends Controller
                 }
             });
         }
-        $items = $this->_extendIndexQuery($items);
+        [$items, $filters] = $this->_extendIndexQuery($items);
         return Inertia::render('admin/'.$this->_alias.'/index', [
             'items' => call_user_func([$this->_resource, 'collection'], $items->paginate($perPage)),
-            'params' => [
+            'params' => array_merge([
                 'page' => request()->query('page'),
                 'per_page' => $perPage,
                 'sort_field' => $sortField,
                 'sort_value' => $sortValue,
                 'keyword' => $keyword,
-            ]
+            ], $filters)
         ]);
     }
 
@@ -178,8 +178,8 @@ class DefaultController extends Controller
         return [];
     }
 
-    protected function _extendIndexQuery(Builder $query): Builder
+    protected function _extendIndexQuery(Builder $query): array
     {
-        return $query;
+        return [$query, []];
     }
 }

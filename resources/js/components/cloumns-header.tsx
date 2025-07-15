@@ -32,9 +32,9 @@ export function DataTableColumnHeader<TData, TValue>({column, title, className}:
                         className="-ml-3 h-8 data-[state=open]:bg-neutral-100"
                     >
                         <span>{title}</span>
-                        {column.getIsSorted() === "desc" ? (
+                        {column.getIsSorted() === "asc" ? (
                             <ArrowDown/>
-                        ) : column.getIsSorted() === "asc" ? (
+                        ) : column.getIsSorted() === "desc" ? (
                             <ArrowUp/>
                         ) : (
                             <ChevronsUpDown/>
@@ -42,13 +42,13 @@ export function DataTableColumnHeader<TData, TValue>({column, title, className}:
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start">
-                    <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
-                        <ArrowUp className="h-3.5 w-3.5 text-muted-foreground/70"/>
-                        昇順
-                    </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => column.toggleSorting(true)}>
-                        <ArrowDown className="h-3.5 w-3.5 text-muted-foreground/70"/>
+                        <ArrowUp className="h-3.5 w-3.5 text-muted-foreground/70"/>
                         降順
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
+                        <ArrowDown className="h-3.5 w-3.5 text-muted-foreground/70"/>
+                        昇順
                     </DropdownMenuItem>
                     <DropdownMenuSeparator/>
                     <DropdownMenuItem onClick={() => column.toggleVisibility(false)}>

@@ -1,5 +1,5 @@
 import {Column, Table} from "@tanstack/react-table"
-import {Check, PlusCircle, Search, Settings2} from "lucide-react"
+import {Check, PlusCircle, Search, SearchIcon, Settings2, XIcon} from "lucide-react"
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {
@@ -27,14 +27,32 @@ import React, {useState} from "react";
 
 interface DataTableToolbarProps<TData> {
     table: Table<TData>,
-    params?: ParamsProps
+    resetFilter: React.RefObject<boolean>,
+    params?: ParamsProps,
 }
 
-export function DataTableToolbar<TData>({table, params}: DataTableToolbarProps<TData>) {
-    const [keyword, setKeyword] = useState(params?.keyword ?? '');
+function getFilterColumns<TData>(table: Table<TData>) {
+    return table
+        .getAllColumns()
+        .filter((column) => {
+            const meta = column.columnDef.meta as ColumnMeta | undefined;
+            return typeof column.accessorFn !== "undefined" && column.getCanHide() && meta?.filterable
+        })
+}
+
+export function DataTableToolbar<TData>({table, params, resetFilter}: DataTableToolbarProps<TData>) {
+    const [keyword, setKeyword] = useState('');
+    const isFiltered = table.getState().columnFilters.length > 0 || table.getState().globalFilter !== '';
 
     const search = () => {
+        if (keyword.trim() === '') return;
         table.setGlobalFilter(keyword);
+    }
+
+    const reset = () => {
+        resetFilter.current = true;
+        table.resetGlobalFilter(true);
+        table.resetColumnFilters(true);
     }
 
     return (
@@ -46,6 +64,9 @@ export function DataTableToolbar<TData>({table, params}: DataTableToolbarProps<T
                         value={keyword}
                         onChange={(e) => setKeyword(e.target.value)}
                         className="h-8 w-[150px] lg:w-[250px]"
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') search();
+                        }}
                     />
                     <Button
                         variant="secondary"
@@ -54,12 +75,35 @@ export function DataTableToolbar<TData>({table, params}: DataTableToolbarProps<T
                     >
                         <Search className="text-white" />
                     </Button>
-                    {table.getColumn("role") && (
-                        <DataTableFacetedFilter
-                            column={table.getColumn("role")}
-                            title="役割"
-                            options={getUserRole()}
+                    {getFilterColumns(table).map(column => {
+                        const meta = column.columnDef.meta as ColumnMeta | undefined;
+                        return <DataTableFacetedFilter
+                            column={column}
+                            title={meta?.title}
+                            options={meta?.options ?? []}
+                            key={column.id}
                         />
+                    })}
+                    {table.getState().globalFilter !== '' && (
+                        <div className="flex items-center px-3 border-dashed border rounded-md gap-2">
+                            <SearchIcon className="size-4" />
+                            <Badge
+                                variant="secondary"
+                                className="rounded-sm px-1 font-normal"
+                            >
+                                 {table.getState().globalFilter}
+                            </Badge>
+                        </div>
+                    )}
+                    {isFiltered && (
+                        <Button
+                            variant="ghost"
+                            onClick={reset}
+                            className="h-8 px-2 lg:px-3"
+                        >
+                            Reset
+                            <XIcon/>
+                        </Button>
                     )}
                 </div>
             </div>
@@ -147,7 +191,7 @@ export function DataTableFacetedFilter<TData, TValue>({column, title, options}: 
                                         variant="secondary"
                                         className="rounded-sm px-1 font-normal"
                                     >
-                                        {selectedValues.size} selected
+                                        {selectedValues.size}個選択中
                                     </Badge>
                                 ) : (
                                     options

@@ -22,4 +22,15 @@ class UserController extends DefaultController
             'role' => 'required',
         ];
     }
+
+    protected function _extendIndexQuery($query): array
+    {
+        $roles = request('role');
+
+        if ($roles) {
+            $query->whereIn('role', explode(',', $roles));
+        }
+
+        return [$query, ['role' => $roles ?? null]];
+    }
 }

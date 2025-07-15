@@ -6,6 +6,7 @@ import {ItemsProps, ParamsProps, User} from "@/types";
 import {ColumnDef} from "@tanstack/react-table";
 import {DataTableColumnHeader} from "@/components/cloumns-header";
 import {DataTableRowActions} from "@/components/row-actions";
+import {getUserRole} from "@/lib/utils";
 
 const breadcrumbs = [
     {
@@ -51,7 +52,9 @@ const columns: ColumnDef<any>[] = [
             return <div>{row.getValue("role")}</div>
         },
         meta: {
-            title: '役割'
+            title: '役割',
+            filterable: true,
+            options: getUserRole()
         }
     },
     {
@@ -73,7 +76,7 @@ const columns: ColumnDef<any>[] = [
 export default function UsersIndex({items, params}: { items: ItemsProps, params: ParamsProps }) {
     return <AdminLayout breadcrumbs={breadcrumbs}>
         <Head title='ユーザー一覧' />
-        <div className="h-full flex-1 flex-col space-y-4 sm:p-6 md:flex">
+        <div className="h-full flex-1 flex-col space-y-4 p-2 sm:px-6 sm:pt-2 sm:pb-10 md:flex">
             <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold tracking-tight">ユーザー一覧</h2>
             </div>

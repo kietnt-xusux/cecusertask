@@ -2,6 +2,7 @@ import { LucideIcon } from 'lucide-react';
 import type { Config } from 'ziggy-js';
 import {FormDataConvertible} from "@inertiajs/core/types/types";
 import {ColumnDef} from "@tanstack/react-table";
+import React from "react";
 
 export interface Auth {
     user: User;
@@ -38,9 +39,15 @@ export interface SharedData {
 
 export interface ItemsProps {
     data: any[];
-    last_page: number;
-    per_page: number;
-    total: number;
+    meta: {
+        current_page: number;
+        from: number;
+        last_page: number;
+        path: string;
+        per_page: number;
+        to: number;
+        total: number;
+    }
 }
 
 export type ParamsProps = Record<string, FormDataConvertible>
@@ -59,6 +66,12 @@ export interface User {
 interface ColumnMeta {
     title: string;
     icon?: string;
+    filterable?: boolean;
+    options?: {
+        label: string
+        value: string
+        icon?: React.ComponentType<{ className?: string }>
+    }[];
 }
 
 export type ColumnDefine = ColumnDef<User, unknown, unknown, unknown, ColumnMeta>;

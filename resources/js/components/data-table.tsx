@@ -9,7 +9,9 @@ import {
     getPaginationRowModel,
     getSortedRowModel,
     useReactTable,
-    ColumnFiltersState
+    ColumnFiltersState,
+    AccessorKeyColumnDef,
+    PaginationState, SortingState, ColumnSort
 } from "@tanstack/react-table"
 
 import {
@@ -22,9 +24,10 @@ import {
 } from "@/components/ui/table"
 import {DataTableToolbar} from "@/components/data-table-toolbar";
 import {useEffect, useRef, useState} from "react";
-import {ItemsProps, ParamsProps} from "@/types";
-import {router, usePage} from "@inertiajs/react";
+import {ColumnMeta, ItemsProps, ParamsProps} from "@/types";
+import {router} from "@inertiajs/react";
 import {LoaderCircle} from "lucide-react";
+import {DataTablePagination} from "@/components/data-table-pagination";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -34,11 +37,63 @@ interface DataTableProps<TData, TValue> {
 }
 
 const defaultParams = {
-    page: 1,
+    page: 0,
     per_page: 20,
     sort_field: '',
     sort_value: 'asc',
     keyword: '',
+}
+
+function parseQueryToColumnFilters(params: ParamsProps | undefined): ColumnFiltersState {
+    const filters: ColumnFiltersState = [];
+    if (!params) return filters;
+    const defaultKeys = Object.keys(defaultParams);
+
+    for (const [key, value] of Object.entries(params)) {
+        if (defaultKeys.includes(key) || !value) {
+            continue;
+        }
+
+        filters.push({
+            id: key,
+            value: (value as string).split(','),
+        });
+    }
+
+    return filters;
+}
+
+function parseQueryToColumnSort(params: ParamsProps | undefined): SortingState {
+    const sorts: SortingState = [];
+    if (!params) return sorts;
+
+    if (params.sort_field) {
+        sorts.push({
+            id: params.sort_field,
+            desc: params.sort_value === 'desc',
+        })
+    }
+
+    return sorts;
+}
+
+function getFilterableColumns<TData, TValue>(columns: ColumnDef<TData, TValue>[]) {
+    const filterableColumns: string[] = [];
+    columns.forEach(column => {
+        const meta = column.meta as ColumnMeta | undefined;
+        const accessorKey = (column as AccessorKeyColumnDef<TData, TValue>).accessorKey;
+        if (meta?.filterable) filterableColumns.push(String(accessorKey));
+    })
+    return filterableColumns;
+}
+
+function omitKeys<T extends object, K extends keyof T>(obj: T, keys: K[], reset?: boolean): Omit<T, K> {
+    const newObj = { ...obj };
+    keys.forEach(key => delete newObj[key]);
+    return reset ? {
+        ...newObj,
+        keyword: ''
+    } : newObj;
 }
 
 export function DataTable<TData, TValue>({columns, items, params, model}: DataTableProps<TData, TValue>) {
@@ -46,7 +101,13 @@ export function DataTable<TData, TValue>({columns, items, params, model}: DataTa
     const [parameters, setParameters] = useState<ParamsProps>(params ?? defaultParams);
     const [loading, setLoading] = useState(false);
     const isFirstRender = useRef(true);
-    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+    const resetFilter = useRef(false);
+    const [paginationState, setPaginationState] = useState<PaginationState>({
+        pageIndex: params?.page ? params?.page - 1 : 0,
+        pageSize: params?.per_page ?? 20,
+    })
+    const [sortingState, setSortingState] = useState<SortingState>([]);
 
     useEffect(() => {
         if (isFirstRender.current) {
@@ -67,17 +128,51 @@ export function DataTable<TData, TValue>({columns, items, params, model}: DataTa
         columns,
         state: {
             columnVisibility,
-            columnFilters,
+            columnFilters: parseQueryToColumnFilters(params),
+            globalFilter: parameters.keyword,
+            pagination: paginationState,
+            sorting: parseQueryToColumnSort(params),
         },
+        pageCount: items.meta.last_page,
         enableRowSelection: true,
         onSortingChange: (sort) => {
-            console.log(sort);
+            setSortingState(sort);
+            let sorts: SortingState = typeof sort === 'function' ? sort(sortingState) : sort;
+            const columnSort: ColumnSort = sorts[0];
+            if (columnSort) {
+                setParameters({
+                    ...parameters,
+                    sort_field: columnSort.id,
+                    sort_value: columnSort.desc ? 'desc' : 'asc',
+                })
+            }
         },
         onGlobalFilterChange: (value) => {
-            setParameters({...parameters, keyword: value})
+            if (resetFilter.current) return;
+            setParameters({...parameters, keyword: value ?? ''});
         },
-        onColumnFiltersChange: setColumnFilters,
+        onColumnFiltersChange: (value) => {
+            setColumnFilters(value);
+            let filters: ColumnFiltersState = typeof value === 'function' ? value(columnFilters) : value;
+            if (filters.length === 0) {
+                setParameters(omitKeys(parameters, getFilterableColumns(columns), resetFilter.current));
+                if (resetFilter.current) resetFilter.current = false;
+                return;
+            }
+            filters.forEach(filter => {
+                setParameters({...parameters, [filter.id]: Array.isArray(filter.value) ? filter.value.join(',') : filter});
+            });
+        },
         onColumnVisibilityChange: setColumnVisibility,
+        onPaginationChange: (value) => {
+            let state: PaginationState = typeof value === 'function' ? value(paginationState) : value;
+            setPaginationState(value);
+            setParameters({
+                ...parameters,
+                page: state.pageIndex + 1,
+                per_page: state.pageSize
+            });
+        },
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
         getSortedRowModel: getSortedRowModel(),
@@ -90,7 +185,7 @@ export function DataTable<TData, TValue>({columns, items, params, model}: DataTa
 
     return (
         <div className="space-y-4">
-            <DataTableToolbar table={table} params={params}/>
+            <DataTableToolbar table={table} params={params} resetFilter={resetFilter}/>
             <div className="rounded-md border shadow-md">
                 <Table>
                     <TableHeader>
@@ -152,6 +247,7 @@ export function DataTable<TData, TValue>({columns, items, params, model}: DataTa
                     </TableBody>
                 </Table>
             </div>
+            <DataTablePagination table={table} />
         </div>
     )
 }

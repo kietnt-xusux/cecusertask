@@ -21,3 +21,13 @@ export function getUserRole() {
         },
     ]
 }
+
+export function getPerPage(): number[] {
+    return [
+        20,
+        50,
+        100,
+        150,
+        200,
+    ]
+}

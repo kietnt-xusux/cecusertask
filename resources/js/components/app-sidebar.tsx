@@ -31,7 +31,7 @@ const navMain: NavItemProps[]  = [
         ],
     },
     {
-        title: "Master",
+        title: "マスター",
         url: "#",
         items: [
             {
