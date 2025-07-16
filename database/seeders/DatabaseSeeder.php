@@ -23,5 +23,10 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('admin123'),
             'role' => UserRole::Admin->value,
         ]);
+
+        // Tạo thêm 10 user fake
+        $this->call([
+            UsersSeeder::class,
+        ]);
     }
 }

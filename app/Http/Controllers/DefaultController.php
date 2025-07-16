@@ -94,6 +94,25 @@ class DefaultController extends Controller
         ]);
     }
 
+    public function create(): Response
+    {
+        return Inertia::render('admin/'.$this->_alias.'/create');
+    }
+
+    public function edit(): Response
+    {
+        $itemId = request()->{$this->_alias};
+        $item = call_user_func([$this->_model, 'find'], $itemId);
+        
+        if (empty($item)) {
+            abort(404);
+        }
+        
+        return Inertia::render('admin/'.$this->_alias.'/edit', [
+            'user' => $item,
+        ]);
+    }
+
     public function show(): Response
     {
         $itemId = request()->{$this->_alias};
@@ -103,15 +122,27 @@ class DefaultController extends Controller
         ]);
     }
 
-    public function store(): Response
+    public function store()
     {
-        $data = $this->_getDataCreate();
-        $item = call_user_func([$this->_model, 'create'], $data);
-        $this->_afterSave($item);
-        $resourceName = $this->_resource;
-        return Inertia::render('Resource', [
-            'item' => $item,
-        ]);
+        try {
+            $data = $this->_getDataCreate();
+            
+            // Log data for debugging
+            \Log::info('Creating user with data:', $data);
+            
+            $item = call_user_func([$this->_model, 'create'], $data);
+            $this->_afterSave($item);
+            
+            // Convert singular to plural for route name
+            $routeName = 'admin.' . Str::plural($this->_alias) . '.index';
+            return redirect()->route($routeName);
+        } catch (\Exception $e) {
+            \Log::error('Error creating user: ' . $e->getMessage());
+            \Log::error('Stack trace: ' . $e->getTraceAsString());
+            
+            // Return error response
+            return back()->withErrors(['error' => 'Failed to create user: ' . $e->getMessage()]);
+        }
     }
 
     public function update()
@@ -128,10 +159,10 @@ class DefaultController extends Controller
         $data = $this->_getDataUpdate($item);
         $item->update($data);
         $this->_afterSave($item, 'update');
-        $resourceName = $this->_resource;
-        return Inertia::render('Resource', [
-            'item' => $item,
-        ]);
+        
+        // Convert singular to plural for route name
+        $routeName = 'admin.' . Str::plural($this->_alias) . '.index';
+        return redirect()->route($routeName);
     }
 
     /**
@@ -139,12 +170,29 @@ class DefaultController extends Controller
      */
     public function destroy()
     {
-        $itemId = request()->{$this->_alias};
-        $item = call_user_func([$this->_model, 'find'], $itemId);
-        if (empty($item)) abort(404);
-        $item->delete();
+        try {
+            $itemId = request()->{$this->_alias};
+            $item = call_user_func([$this->_model, 'find'], $itemId);
+            
+            if (empty($item)) {
+                abort(404);
+            }
+            
+            // Call before delete hook
+            $this->_beforeDelete($item);
+            
+            // Get item name for success message
+            $itemName = $item->name ?? 'Item';
+            
+            $item->delete();
 
-        return redirect()->route($this->_resource);
+            // Convert singular to plural for route name
+            $routeName = 'admin.' . Str::plural($this->_alias) . '.index';
+            return redirect()->route($routeName)->with('success', ucfirst($this->_alias) . ' "' . $itemName . '" deleted successfully');
+        } catch (\Exception $e) {
+            \Log::error('Error deleting item: ' . $e->getMessage());
+            return back()->withErrors(['error' => 'Failed to delete item: ' . $e->getMessage()]);
+        }
     }
 
     protected function _getDataUpdate($item): array
@@ -166,6 +214,11 @@ class DefaultController extends Controller
     protected function _afterSave($item, $action = 'store')
     {
 
+    }
+
+    protected function _beforeDelete($item)
+    {
+        // Override in child classes if needed
     }
 
     protected function _beforeSave($data, $action = 'store')

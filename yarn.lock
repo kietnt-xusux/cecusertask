@@ -2075,6 +2075,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/cropperjs@npm:^1.3.3":
+  version: 1.3.3
+  resolution: "@types/cropperjs@npm:1.3.3"
+  dependencies:
+    cropperjs: "npm:*"
+  checksum: 10c0/7135a544ff3791f3cf504508a63515c36e39bf2a333be3830460e71d7deb3ca8c881242b7aa81e89da7ec1c4bda33f4f77881eb10652a8f6c039ae61cb496a94
+  languageName: node
+  linkType: hard
+
 "@types/estree@npm:1.0.7":
   version: 1.0.7
   resolution: "@types/estree@npm:1.0.7"
@@ -2350,13 +2359,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cropperjs@npm:^2.0.0":
+"cropperjs@npm:*":
   version: 2.0.0
   resolution: "cropperjs@npm:2.0.0"
   dependencies:
     "@cropper/elements": "npm:^2.0.0"
     "@cropper/utils": "npm:^2.0.0"
   checksum: 10c0/a1bafe952d79e3b284c7492a262c0a1a9badaef96cbbd605d04b38450ff3323fcd38ee9cc964c2dfc80f541000fb634870370cf48f64d1fa0f157f3845bdf092
+  languageName: node
+  linkType: hard
+
+"cropperjs@npm:^1.5.0":
+  version: 1.6.2
+  resolution: "cropperjs@npm:1.6.2"
+  checksum: 10c0/5002e0cc3a491ceb8a104b2cb7a7c335a03e109fe590653f3aeefa27ca7115466edae62afc8ba21105bbaad4134583f5057ebbf5e8d843c7b2c1c1f0779630e9
   languageName: node
   linkType: hard
 
@@ -3599,6 +3615,7 @@ __metadata:
     "@tailwindcss/oxide-linux-x64-gnu": "npm:^4.0.1"
     "@tailwindcss/vite": "npm:^4.0.6"
     "@tanstack/react-table": "npm:^8.21.3"
+    "@types/cropperjs": "npm:^1.3.3"
     "@types/js-cookie": "npm:^3"
     "@types/node": "npm:^24.0.2"
     "@types/react": "npm:^19.0.3"
@@ -3607,7 +3624,7 @@ __metadata:
     class-variance-authority: "npm:^0.7.1"
     clsx: "npm:^2.1.1"
     cmdk: "npm:^1.1.1"
-    cropperjs: "npm:^2.0.0"
+    cropperjs: "npm:^1.5.0"
     js-cookie: "npm:^3.0.5"
     laravel-vite-plugin: "npm:^1.0"
     lightningcss-linux-x64-gnu: "npm:^1.29.1"

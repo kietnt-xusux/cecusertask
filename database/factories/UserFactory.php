@@ -26,12 +26,14 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
+            'id' => fake()->unique()->numberBetween(1, 1000),
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
             'role' => Arr::random(UserRole::values()),
+            'avatar' => fake()->imageUrl(100, 100, 'people'), // Tùy chọn: thêm avatar
         ];
     }
 
@@ -42,6 +44,36 @@ class UserFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
+        ]);
+    }
+
+    /**
+     * Tạo user với role Admin
+     */
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => UserRole::Admin->value,
+        ]);
+    }
+
+    /**
+     * Tạo user với role Manager
+     */
+    public function manager(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => UserRole::Manager->value,
+        ]);
+    }
+
+    /**
+     * Tạo user với role User
+     */
+    public function user(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => UserRole::User->value,
         ]);
     }
 }

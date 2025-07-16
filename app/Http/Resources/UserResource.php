@@ -20,7 +20,7 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'role' => UserRole::labelFromValue($this->role),
-            'avatar' => $this->picture,
+            'avatar' => $this->avatar,
             'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
         ];
     }
