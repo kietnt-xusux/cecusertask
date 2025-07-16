@@ -1,12 +1,13 @@
 ## User Manager Laravel + React + Tailwindcss
 
-$ Bảng users (id, name, email)
-$ Hiển thị danh sách users
-$ Tạo form thêm sửa user
-$ Xóa user
-$ Thêm sửa avatar user cho phép crop
-$ sử dụng
-$ https://github.com/fengyuanchen/cropperjs
+Bảng users (id, name, email)  
+Hiển thị danh sách users  
+Tạo form thêm sửa user  
+Xóa user  
+Thêm sửa avatar user cho phép crop  
+sử dụng  
+https://github.com/fengyuanchen/cropperjs  
+
 
 
 # Base project
