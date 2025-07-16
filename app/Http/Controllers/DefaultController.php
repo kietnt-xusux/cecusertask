@@ -125,6 +125,9 @@ class DefaultController extends Controller
     public function store()
     {
         try {
+            // Log raw request data
+            \Log::info('Raw request data:', request()->all());
+            
             $data = $this->_getDataCreate();
             
             // Log data for debugging
@@ -203,12 +206,15 @@ class DefaultController extends Controller
     protected function _getDataCreate(): array
     {
         $model = $this->_model;
-        return $this->_beforeSave($this->_validate(new $model));
+        $validatedData = $this->_validate(new $model);
+        return $this->_beforeSave($validatedData, 'store');
     }
 
     protected function _validate($model, $action = 'store'): array
     {
-        return request()->validate($this->_validateRule($model, $action));
+        $validatedData = request()->validate($this->_validateRule($model, $action));
+        \Log::info('Validated data:', $validatedData);
+        return $validatedData;
     }
 
     protected function _afterSave($item, $action = 'store')
